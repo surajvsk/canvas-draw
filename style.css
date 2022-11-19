@@ -1,0 +1,17 @@
+.menus{
+	display:inline-block;
+}
+
+.menus ul{
+	position: fixed;
+    top: 40%;
+    z-index: 99999999999999;
+    background: #5a5a5a;
+    padding: 5px;
+    list-style: none;
+    color: white;
+}
+
+.menus ul li{
+	cursor:pointer;
+}
