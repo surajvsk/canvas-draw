@@ -15,3 +15,7 @@
 .menus ul li{
 	cursor:pointer;
 }
+
+.sortable-handler {
+  touch-action: none;
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MY CANVAS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" >
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+	<link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+
+<div class="menus">
+<ul class="menu-selector">
+<li class="Save"><i class="bi bi-box-arrow-down"></i> Save</li>
+<li class="Geen"><i class="bi bi-pen"></i> Geen</li>
+<li class="Red"><i class="bi bi-pen"></i> Red</li>
+<li class="Black"><i class="bi bi-pen"></i> Black</li>
+<li class="Blue"><i class="bi bi-pen"></i> Blue</li>
+<li class="Yellow"><i class="bi bi-pen"></i> Yellow</li>
+<!--<li class="Share"><i class="bi bi-share"></i> Share</li>-->
+<li class="Clear"><i class="bi bi-x-lg"></i> Clear</li>
+</ul>
+</div>
+	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+	<script src="jcanvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" ></script>
+
+
+  <script>
+  // FOR COLOR CHNAGE
+
+  let properties = {}
+
+  const selectElement = document.querySelector('.menu-selector');
+  selectElement.addEventListener('click', (event) => {
+    selectElement.children.li;
+  console.log('event.target.value:::::::::::',event.target.className)
+  let selectedEvt = event.target.className;
+  if(selectedEvt =="Geen"){
+	properties.backgroudColor = "#00FF00";
+  }else if(selectedEvt =="Red"){
+	properties.backgroudColor = "#FF0000";
+  }else if(selectedEvt =="Black"){
+	properties.backgroudColor = "#000000";
+  }else if(selectedEvt =="Blue"){
+  properties.backgroudColor = "#0000FF";
+  }else if(selectedEvt =="Yellow"){
+  properties.backgroudColor = "#FFFF00";
+  }else if(selectedEvt =="Save"){
+	downloadCanvasAsImage()
+
+  }else if(selectedEvt =="Clear"){
+	   clearCanvas()
+  }else{
+    console.log('WORKING ON OTHER EVENTS')
+  }
+
+  console.log('properties::::::>>',properties)
+});
+
+
+
+// create canvas element and append it to document body
+var canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+
+// some hotfixes... ( ≖_≖)
+document.body.style.margin = 0;
+canvas.style.position = 'fixed';
+
+// get canvas 2D context and set him correct size
+var ctx = canvas.getContext('2d');
+resize();
+
+// last known position
+var pos = { x: 0, y: 0 };
+
+window.addEventListener('resize', resize);
+document.addEventListener('mousemove', draw);
+document.addEventListener('mousedown', setPosition);
+document.addEventListener('mouseenter', setPosition);
+
+// new position from mouse event
+function setPosition(e) {
+  pos.x = e.clientX;
+  pos.y = e.clientY;
+}
+
+// resize canvas
+function resize() {
+  ctx.canvas.width = window.innerWidth;
+  ctx.canvas.height = window.innerHeight;
+}
+
+function draw(e) {
+  // mouse left button must be pressed
+  if (e.buttons !== 1) return;
+
+  ctx.beginPath(); // begin
+
+  ctx.lineWidth = 3; // CHANGE LINE WIDTH HERE
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = properties.backgroudColor; //CHANGING THE BACKGROUND COLOR OF PEN
+
+  ctx.moveTo(pos.x, pos.y); // from
+  setPosition(e);
+  ctx.lineTo(pos.x, pos.y); // to
+console.log('ctx::::::::',ctx)
+  ctx.stroke(); // draw it!
+    let canvasImage = ctx.canvas.toDataURL();
+	console.log('BASE 64::::::::>>',canvasImage)
+}
+
+function clearCanvas(){
+console.log('CLEAR:::::::>>>',ctx)
+ctx.clearRect(0,0,$('canvas')[0].width, $('canvas')[0].height);// CLEARING ALL CANVAS EVENT
+}
+
+function downloadCanvasAsImage(){
+    let canvasImage = ctx.canvas.toDataURL('image/png');
+    // this can be used to download any image from webpage to local disk
+    let xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = function () {
+        let a = document.createElement('a');
+        a.href = window.URL.createObjectURL(xhr.response);
+        a.download = new Date().toDateString()+'.png';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      };
+      xhr.open('GET', canvasImage); // This is to download the canvas Image
+      xhr.send();
+}
+
+  </script>
+
+
+  </body>
+</html>
