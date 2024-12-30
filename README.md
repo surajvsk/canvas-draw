@@ -1,7 +1,3 @@
-Based on the provided directory structure for the `surajvsk-canvas-draw` repository, here’s a brief explanation of its purpose and contents:
-
----
-
 ### **Project Overview: Canvas Drawing Application**
 This project is a **Canvas Drawing App** that allows users to draw on an HTML canvas element. It supports both desktop and mobile platforms, with a pen color selector for added customization. The directory structure indicates that the project is organized with different entry points and styling for drawing functionality.
 
