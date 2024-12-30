@@ -35,5 +35,3 @@ This project is a **Canvas Drawing App** that allows users to draw on an HTML ca
 - Add functionality to save the drawn canvas as an image.  
 - Include undo/redo buttons for better usability.  
 - Expand the color selector to include a wider range of options or a color picker tool.  
-
-Let me know if you’d like help extending this project further! 😊
